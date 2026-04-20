@@ -154,3 +154,101 @@ Cet atelier ANSIBLE, **noté sur 20 points**, est évalué sur la base du barèm
 - Questions + Qualité du Readme (lisibilité, erreur, ...) (5 points)
 - Atelier - Rôles DEV et PROD (6 points)
 - Processus travail (quantité de commits, cohérence globale, interventions externes, ...) (3 points) 
+
+
+## Question 1 : Pourquoi Ansible est-il qualifié d’outil "déclaratif" ?
+
+Ansible est qualifié d’outil déclaratif car on ne décrit pas les étapes techniques une par une, mais **l’état final souhaité du système**.
+
+Par exemple, au lieu d’écrire toutes les commandes pour installer et démarrer un serveur web, on déclare simplement que :
+
+* le paquet nginx doit être installé
+* le service doit être démarré
+
+Ansible se charge ensuite de déterminer les actions nécessaires pour atteindre cet état.
+
+De plus, Ansible est **idempotent**, ce qui signifie que si l’état souhaité est déjà atteint, aucune modification ne sera appliquée. Cela garantit des déploiements fiables et reproductibles.
+
+
+## Question 2 : Pourquoi l’utilisation de variables est-elle essentielle dans un playbook ?
+
+Les variables permettent de rendre les playbooks **flexibles, réutilisables et dynamiques**.
+
+Elles évitent de coder des valeurs en dur (hardcoding) et permettent de :
+
+* personnaliser les déploiements (ex : nom, utilisateur, port)
+* adapter le même playbook à différents environnements (dev, test, production)
+* centraliser les configurations
+
+Par exemple, au lieu d’écrire directement un titre HTML, on utilise :
+{{ page_title }}
+
+Ainsi, le contenu peut être modifié sans changer la structure du playbook, ce qui facilite la maintenance et l’évolution.
+
+
+## Question 3 : En quoi Ansible facilite-t-il la gestion de plusieurs serveurs ?
+
+Ansible permet de gérer plusieurs serveurs simultanément grâce à son fichier d’inventaire.
+
+Dans cet inventaire, on peut :
+
+* définir plusieurs machines
+* les organiser en groupes (web, database, etc.)
+
+Un seul playbook peut ensuite être exécuté sur :
+
+* un serveur
+* un groupe de serveurs
+* ou toute l’infrastructure
+
+Ansible utilise SSH pour se connecter aux machines, sans agent à installer, ce qui simplifie fortement le déploiement.
+
+Cela permet d’assurer :
+
+* une configuration uniforme
+* un gain de temps important
+* une réduction des erreurs humaines
+
+
+## Question 4 : Quels sont les avantages et les limites d’Ansible dans un contexte DevOps ?
+
+### Avantages :
+
+* Simplicité d’utilisation (syntaxe YAML lisible)
+* Pas d’agent à installer (fonctionne via SSH)
+* Idempotence (exécutions sûres et répétables)
+* Automatisation rapide des tâches
+* Intégration facile dans des pipelines DevOps
+
+### Limites :
+
+* Moins performant pour de très grandes infrastructures
+* Exécution séquentielle (peut être plus lent que d’autres outils)
+* Gestion d’état moins avancée que certains outils comme Terraform
+* Débogage parfois complexe sur des playbooks volumineux
+
+Ansible reste cependant un excellent outil pour la configuration et l’automatisation dans un environnement DevOps.
+
+
+## Question 5 : Quelle est la différence entre les modules copy et template dans Ansible ?
+
+Le module **copy** permet de copier un fichier tel quel depuis la machine de contrôle vers la machine cible.
+
+Exemple :
+
+* copier un fichier HTML statique
+* aucun traitement du contenu
+
+Le module **template**, quant à lui, utilise le moteur Jinja2 pour générer un fichier dynamique.
+
+Il permet d’intégrer des variables dans le fichier grâce à la syntaxe :
+{{ variable }}
+
+Ainsi :
+
+* copy → contenu fixe
+* template → contenu dynamique et personnalisable
+
+Le module template est donc essentiel pour créer des configurations adaptables selon le contexte (utilisateur, environnement, etc.).
+
+
